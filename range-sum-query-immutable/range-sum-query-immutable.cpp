@@ -1,26 +1,50 @@
 class NumArray {
 public:
-    NumArray(vector<int>& nums) 
+    
+    vector<int> tree;
+    int n;
+    
+    NumArray(vector<int>& ar) 
     {
-        int n=nums.size();
-        sum.reserve(n+1);
-        sum.push_back(0);
-        for(int i=0;i<n;i++)
+        n=ar.size();
+        
+        while(__builtin_popcount(n)!=1)
         {
-            sum.push_back(sum[i]+nums[i]);
+            ar.push_back(0);
+            n++;
         }
+        
+        tree.resize(2*n);
+        
+        for(int i=0;i<n;i++)
+            tree[n+i]=ar[i];
+        
+        for(int i=n-1;i>=1;i--)
+            tree[i]=tree[2*i]+tree[2*i+1];
     }
     
-    int sumRange(int i, int j) 
+    
+    int find(int node_left,int node_right,int left,int right,int node)
     {
-        return sum[j+1]-sum[i];
+        if(left<=node_left && node_right<=right)
+            return tree[node];
+        if(node_right<left || right<node_left)
+            return 0;
+        
+        int mid = (node_left+node_right)/2;
+        
+        return find(node_left,mid,left,right,2*node)+
+            find(mid+1,node_right,left,right,2*node+1);
     }
-    private:
-    vector<int> sum;
+    
+    int sumRange(int left, int right) 
+    {
+        return find(0,n-1,left,right,1);
+    }
 };
 
 /**
  * Your NumArray object will be instantiated and called as such:
  * NumArray* obj = new NumArray(nums);
- * int param_1 = obj->sumRange(i,j);
+ * int param_1 = obj->sumRange(left,right);
  */
