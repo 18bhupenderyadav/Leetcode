@@ -52,10 +52,8 @@ public:
             return cnt;
         };
         
-        long long int low=0,high=10;
-        for(int i:ar)
-            high=max(high,i*1ll);
-        high+=10;
+        long long int low=0,high=1e9+10;
+
         while(low+1<high)
         {
             long long int mid=(low+high+1)/2;
