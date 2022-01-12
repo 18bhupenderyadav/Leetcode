@@ -2,7 +2,7 @@
 class Solution {
 public:
     const int inf=1e6;
-    map<int,vector<int>> mp;
+    unordered_map<int,vector<int>> mp;
     vector<int> tree;
     int nm;
     int find(int node,int node_low,int node_high,int low,int high)
