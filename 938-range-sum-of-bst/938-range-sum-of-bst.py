@@ -12,9 +12,13 @@ class Solution:
             if(root):
                 if(root.val>=low and root.val<=high):
                     self.ans+=root.val
-                    
-                dfs(root.left)
-                dfs(root.right)
+                    dfs(root.left)
+                    dfs(root.right)
+                
+                if(root.val>high):
+                    dfs(root.left)
+                if(root.val<low):
+                    dfs(root.right)
                 
             
         self.ans=0  
