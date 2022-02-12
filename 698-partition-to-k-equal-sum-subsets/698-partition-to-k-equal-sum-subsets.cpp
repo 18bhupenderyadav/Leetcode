@@ -1,7 +1,7 @@
 class Solution {
 public:
     int memo[(1<<16)][16];
-    map<string,int> mp;
+    unordered_map<string,int> mp;
     
     string tos(int mask,int cnt)
     {
