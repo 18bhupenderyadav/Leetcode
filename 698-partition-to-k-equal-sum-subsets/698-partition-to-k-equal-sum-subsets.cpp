@@ -3,10 +3,10 @@ public:
     int memo[(1<<16)][16];
     unordered_map<string,int> mp;
     
-    string tos(int mask,int cnt)
+    string tos(int mask,int cnt,int sum)
     {
         string s="";
-        s+=to_string(mask)+'-'+to_string(cnt);
+        s+=to_string(mask)+'-'+to_string(cnt)+'-'+to_string(sum);
         return s;
     }
     
@@ -25,7 +25,7 @@ public:
         // if(memo[mask][cnt]!=-1)
         //     return memo[mask][cnt];
         
-        string s = tos(mask,cnt);
+        string s = tos(mask,cnt,cursum);
         
         if(mp.find(s)!=mp.end())
             return mp[s];
