@@ -1,7 +1,6 @@
 class Solution {
 public:
-    int memo[100000+5][27];
-    int dp(int pos,int prev,vector<int>& col,vector<int>& t)
+    int dp(int pos,int prev,vector<int>& col,vector<int>& t,vector<vector<int>>& memo)
     {
         if(pos>=col.size())
             return 0;
@@ -11,13 +10,13 @@ public:
         
         int ans = INT_MAX;
         
-        ans = min(ans , t[pos]+dp(pos+1,prev,col,t));
+        ans = min(ans , t[pos]+dp(pos+1,prev,col,t,memo));
 
         // If last color and this one is not same then we have 2 options 
         // that is to remove this or not
         if(col[pos]!=prev)
         {
-            ans = min(ans , dp(pos+1,col[pos],col,t));
+            ans = min(ans , dp(pos+1,col[pos],col,t,memo));
         }
         
         memo[pos][prev+1]=ans;
@@ -35,7 +34,8 @@ public:
             col[i]=colors[i]-'a';
         }
         
-        memset(memo,-1,sizeof(memo));
-        return dp(0,-1,col,t);
+        // memset(memo,-1,sizeof(memo));
+        vector<vector<int>> memo(n+5,vector<int>(27,-1));
+        return dp(0,-1,col,t,memo);
     }
 };
