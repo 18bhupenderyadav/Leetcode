@@ -10,13 +10,13 @@ public:
             return memo[pos][prev];
         
         int ans = INT_MAX;
-        if(col[pos]==prev)
+        
+        ans = min(ans , t[pos]+dp(pos+1,prev,col,t));
+
+        // If last color and this one is not same then we have 2 options 
+        // that is to remove this or not
+        if(col[pos]!=prev)
         {
-            ans = min(ans , t[pos]+dp(pos+1,prev,col,t));
-        }
-        else
-        {
-            ans = min(ans , t[pos]+dp(pos+1,prev,col,t));
             ans = min(ans , dp(pos+1,col[pos],col,t));
         }
         
