@@ -1,28 +1,34 @@
 class Solution {
 public:
     int memo[505][505];
-    int dp(string& s,string& t,int i,int j)
+    int dp(string& a,string& b,int i,int j)
     {
-        if(i<0)
+        if(i<0 || j<0)
             return 0;
-        if(j<0)
-            return 0;
-        
         if(memo[i][j]!=-1)
             return memo[i][j];
-        if(s[i]==t[j])
+        
+        int ans=0;
+        if(a[i]==b[j])
         {
-            return memo[i][j]=1+dp(s,t,i-1,j-1);
+            ans = max(ans,1+dp(a,b,i-1,j-1));
+        }
+        else
+        {
+            ans = max(ans,dp(a,b,i-1,j));
+            ans = max(ans,dp(a,b,i,j-1));
         }
         
-        return memo[i][j]=max(dp(s,t,i-1,j),dp(s,t,i,j-1));
+        return memo[i][j]=ans;
     }
     int minInsertions(string s) 
     {
         string t=s;
         reverse(t.begin(),t.end());
-        int n=s.size();
+        
         memset(memo,-1,sizeof(memo));
-        return n-dp(s,t,n-1,n-1);
+        int l=dp(s,t,s.size()-1,t.size()-1);
+        
+        return s.size()-l;
     }
 };
