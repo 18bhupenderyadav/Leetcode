@@ -6,8 +6,8 @@ public:
         if(pos>=col.size())
             return 0;
         
-        if(prev!=-1 && memo[pos][prev]!=-1)
-            return memo[pos][prev];
+        if(memo[pos][prev+1]!=-1)
+            return memo[pos][prev+1];
         
         int ans = INT_MAX;
         
@@ -20,8 +20,7 @@ public:
             ans = min(ans , dp(pos+1,col[pos],col,t));
         }
         
-        if(prev!=-1)
-            memo[pos][prev]=ans;
+        memo[pos][prev+1]=ans;
         
         return ans;
     }
