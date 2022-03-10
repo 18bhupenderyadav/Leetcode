@@ -10,37 +10,30 @@ public:
             dfs(v,adj,vis);
         return;
     }
-    int numSimilarGroups(vector<string>& strs) 
+    bool issimmilar(string& a,string& b)
     {
-        unordered_map<string,int> mp;
-        
-        int n=strs.size();
-        for(int i=0;i<n;i++)
+        int cnt=0;
+        for(int i=0;i<a.size();i++)
         {
-            mp[strs[i]] = i;
+            if(a[i]!=b[i])
+                cnt++;
         }
         
+        return cnt==2 || cnt==0;
+    }
+    int numSimilarGroups(vector<string>& strs) 
+    {
+        int n=strs.size();
         vector<vector<int>> adj(n);
         
         for(int i=0;i<n;i++)
         {
-            string temp = strs[i];
-            if(mp.find(temp)!=mp.end())
+            for(int j=i+1;j<n;j++)
             {
-                adj[i].push_back(mp[temp]);
-                adj[mp[temp]].push_back(i);
-            }
-            for(int j=0;j<temp.size();j++)
-            {
-                for(int k=j+1;k<temp.size();k++)
+                if(issimmilar(strs[i],strs[j]))
                 {
-                    swap(temp[j],temp[k]);
-                    if(mp.find(temp)!=mp.end())
-                    {
-                        adj[i].push_back(mp[temp]);
-                        adj[mp[temp]].push_back(i);
-                    }
-                    swap(temp[j],temp[k]);
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
                 }
             }
         }
