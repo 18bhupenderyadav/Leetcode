@@ -49,7 +49,17 @@ public:
         if(!root)
             return 0;
         
-        return dp(root,0,0);
-
+        int ans = 1 + dp(root->left,0,1) + dp(root->right,0,1);
+        
+        if(root->left)
+        {
+            ans = min(ans, dp(root->left,1,1) + dp(root->right,0,0));
+        }
+        if(root->right)
+        {
+            ans = min(dp(root->left,0,0) + dp(root->right,1,1),ans);
+        }
+        
+        return ans;
     }
 };
