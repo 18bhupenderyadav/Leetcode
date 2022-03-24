@@ -1,6 +1,6 @@
 class Solution {
 public:
-    map<string,int> mp;
+    unordered_map<string,int> mp;
     int dp(string& s,string& t,int pos)
     {
         if(s==t)
