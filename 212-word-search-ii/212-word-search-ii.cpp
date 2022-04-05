@@ -4,8 +4,9 @@ public:
     vector<int> ans;
     vector<int> isEnd;
     vector<vector<int>> nxt;
+    vector<vector<int>> vis;
     
-    void dfs(int i,int j,vector<vector<int>>& vis,vector<vector<char>>& br,int node)
+    void dfs(int i,int j,vector<vector<char>>& br,int node)
     {
         if(isEnd[node]!=-1)
         {   
@@ -27,10 +28,10 @@ public:
         
         int new_node = nxt[node][cur];
         
-        dfs(i+1,j,vis,br,new_node);
-        dfs(i-1,j,vis,br,new_node);
-        dfs(i,j+1,vis,br,new_node);
-        dfs(i,j-1,vis,br,new_node);
+        dfs(i+1,j,br,new_node);
+        dfs(i-1,j,br,new_node);
+        dfs(i,j+1,br,new_node);
+        dfs(i,j-1,br,new_node);
         
 
         vis[i][j]=0;
@@ -40,10 +41,7 @@ public:
     
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) 
     {
-        // Build a trie
-        
-        // vector<vector<int>> nxt(1,vector<int>(26,0));
-        // vector<int> isEnd(1,-1);
+
         nxt.resize(1,vector<int>(26,0));
         isEnd.resize(1,-1);
         
@@ -72,13 +70,13 @@ public:
 
         ans.resize(sz+1);
         
-        vector<vector<int>> vis(board.size(),vector<int>(board[0].size(),0));
+        vis.resize(board.size(),vector<int>(board[0].size(),0));
         
         for(int i=0;i<board.size();i++)
         {
             for(int j=0;j<board[i].size();j++)
             {
-                dfs(i,j,vis,board,0);
+                dfs(i,j,board,0);
             }
         }
         vector<string> sol;
