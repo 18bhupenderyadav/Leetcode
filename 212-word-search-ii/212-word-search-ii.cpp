@@ -2,7 +2,10 @@ class Solution {
 public:
 
     vector<int> ans;
-    void dfs(int i,int j,vector<vector<int>>& vis,vector<vector<char>>& br,vector<int>& isEnd ,int node,vector<vector<int>>& nxt)
+    vector<int> isEnd;
+    vector<vector<int>> nxt;
+    
+    void dfs(int i,int j,vector<vector<int>>& vis,vector<vector<char>>& br,int node)
     {
         if(isEnd[node]!=-1)
         {   
@@ -24,10 +27,10 @@ public:
         
         int new_node = nxt[node][cur];
         
-        dfs(i+1,j,vis,br,isEnd,new_node,nxt);
-        dfs(i-1,j,vis,br,isEnd,new_node,nxt);
-        dfs(i,j+1,vis,br,isEnd,new_node,nxt);
-        dfs(i,j-1,vis,br,isEnd,new_node,nxt);
+        dfs(i+1,j,vis,br,new_node);
+        dfs(i-1,j,vis,br,new_node);
+        dfs(i,j+1,vis,br,new_node);
+        dfs(i,j-1,vis,br,new_node);
         
 
         vis[i][j]=0;
@@ -39,8 +42,10 @@ public:
     {
         // Build a trie
         
-        vector<vector<int>> nxt(1,vector<int>(26,0));
-        vector<int> isEnd(1,-1);
+        // vector<vector<int>> nxt(1,vector<int>(26,0));
+        // vector<int> isEnd(1,-1);
+        nxt.resize(1,vector<int>(26,0));
+        isEnd.resize(1,-1);
         
         int n = 0;
         
@@ -73,7 +78,7 @@ public:
         {
             for(int j=0;j<board[i].size();j++)
             {
-                dfs(i,j,vis,board,isEnd,0,nxt);
+                dfs(i,j,vis,board,0);
             }
         }
         vector<string> sol;
