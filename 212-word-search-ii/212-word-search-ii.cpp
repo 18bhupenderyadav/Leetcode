@@ -2,10 +2,14 @@ class Solution {
 public:
 
     
-    void dfs(int i,int j,vector<vector<int>>& vis,vector<vector<char>>& br,vector<int>& isEnd ,string& s,int node,vector<vector<int>>& nxt,unordered_set<string>& ans)
+    void dfs(int i,int j,vector<vector<int>>& vis,vector<vector<char>>& br,vector<int>& isEnd ,int node,vector<vector<int>>& nxt,vector<int>& ans)
     {
-        if(isEnd[node])
-            ans.insert(s);
+        if(isEnd[node]!=-1)
+        {   
+            // cout<<isEnd[node]<<endl;
+            ans[isEnd[node]] = 1;
+        }
+        
         if(i<0 || j<0 || i>=br.size() || j>=br[i].size())
             return;
         if(vis[i][j])
@@ -16,17 +20,17 @@ public:
             return;
         
         vis[i][j]=1;
-        s+= br[i][j];
+        // s+= br[i][j];
         
         
         int new_node = nxt[node][cur];
         
-        dfs(i+1,j,vis,br,isEnd,s,new_node,nxt,ans);
-        dfs(i-1,j,vis,br,isEnd,s,new_node,nxt,ans);
-        dfs(i,j+1,vis,br,isEnd,s,new_node,nxt,ans);
-        dfs(i,j-1,vis,br,isEnd,s,new_node,nxt,ans);
+        dfs(i+1,j,vis,br,isEnd,new_node,nxt,ans);
+        dfs(i-1,j,vis,br,isEnd,new_node,nxt,ans);
+        dfs(i,j+1,vis,br,isEnd,new_node,nxt,ans);
+        dfs(i,j-1,vis,br,isEnd,new_node,nxt,ans);
         
-        s.pop_back();
+        // s.pop_back();
         vis[i][j]=0;
         return;
         
@@ -37,7 +41,7 @@ public:
         // Build a trie
         
         vector<vector<int>> nxt(1,vector<int>(26,0));
-        vector<int> isEnd(1,0);
+        vector<int> isEnd(1,-1);
         
         int n = 0;
         
@@ -52,29 +56,32 @@ public:
                     n++;
                     nxt[node][cur] = n;
                     nxt.push_back(vector<int>(26,0));
-                    isEnd.push_back(0);
+                    isEnd.push_back(-1);
                 }
                 node = nxt[node][cur];
             }
-            isEnd[node] = 1;
+            isEnd[node] = i;
         }
         
         // DFS using the trie
-        unordered_set<string> ans;
+        int sz = words.size();
+        vector<int> ans(sz+1,0);
         vector<vector<int>> vis(board.size(),vector<int>(board[0].size(),0));
+        
         for(int i=0;i<board.size();i++)
         {
             for(int j=0;j<board[i].size();j++)
             {
-                
-                string s = "";
-                dfs(i,j,vis,board,isEnd,s,0,nxt,ans);
+                dfs(i,j,vis,board,isEnd,0,nxt,ans);
             }
         }
         vector<string> sol;
         
-        for(auto i:ans)
-            sol.push_back(i);
+        for(int i=0;i<words.size();i++)
+        {
+            if(ans[i])
+                sol.push_back(words[i]);
+        }
         
         return sol;
         
