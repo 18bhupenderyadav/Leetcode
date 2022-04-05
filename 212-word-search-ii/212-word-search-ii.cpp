@@ -1,12 +1,11 @@
 class Solution {
 public:
 
-    
-    void dfs(int i,int j,vector<vector<int>>& vis,vector<vector<char>>& br,vector<int>& isEnd ,int node,vector<vector<int>>& nxt,vector<int>& ans)
+    vector<int> ans;
+    void dfs(int i,int j,vector<vector<int>>& vis,vector<vector<char>>& br,vector<int>& isEnd ,int node,vector<vector<int>>& nxt)
     {
         if(isEnd[node]!=-1)
         {   
-            // cout<<isEnd[node]<<endl;
             ans[isEnd[node]] = 1;
         }
         
@@ -20,17 +19,17 @@ public:
             return;
         
         vis[i][j]=1;
-        // s+= br[i][j];
+
         
         
         int new_node = nxt[node][cur];
         
-        dfs(i+1,j,vis,br,isEnd,new_node,nxt,ans);
-        dfs(i-1,j,vis,br,isEnd,new_node,nxt,ans);
-        dfs(i,j+1,vis,br,isEnd,new_node,nxt,ans);
-        dfs(i,j-1,vis,br,isEnd,new_node,nxt,ans);
+        dfs(i+1,j,vis,br,isEnd,new_node,nxt);
+        dfs(i-1,j,vis,br,isEnd,new_node,nxt);
+        dfs(i,j+1,vis,br,isEnd,new_node,nxt);
+        dfs(i,j-1,vis,br,isEnd,new_node,nxt);
         
-        // s.pop_back();
+
         vis[i][j]=0;
         return;
         
@@ -65,14 +64,16 @@ public:
         
         // DFS using the trie
         int sz = words.size();
-        vector<int> ans(sz+1,0);
+
+        ans.resize(sz+1);
+        
         vector<vector<int>> vis(board.size(),vector<int>(board[0].size(),0));
         
         for(int i=0;i<board.size();i++)
         {
             for(int j=0;j<board[i].size();j++)
             {
-                dfs(i,j,vis,board,isEnd,0,nxt,ans);
+                dfs(i,j,vis,board,isEnd,0,nxt);
             }
         }
         vector<string> sol;
@@ -84,6 +85,5 @@ public:
         }
         
         return sol;
-        
     }
 };
