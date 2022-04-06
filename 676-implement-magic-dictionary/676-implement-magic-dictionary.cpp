@@ -1,7 +1,7 @@
 class MagicDictionary {
 public:
     // vector<vector<int>> nxt;
-    map<string,int> mp,al;
+    unordered_map<string,int> mp,al;
     MagicDictionary() 
     {
         mp.clear();
