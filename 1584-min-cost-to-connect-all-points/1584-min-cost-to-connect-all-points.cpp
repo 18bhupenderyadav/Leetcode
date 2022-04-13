@@ -7,9 +7,9 @@ public:
         return ct;
     }
     
-    static bool cmp(vector<int>& a,vector<int>& b)
+    static bool cmp(pair<int,pair<int,int>>& a,pair<int,pair<int,int>>& b)
     {
-        return a[2]<b[2];
+        return a.second.second<b.second.second;
     }
     
     int get(int a,vector<int>& par)
@@ -41,14 +41,14 @@ public:
     {
         int n = pt.size(),ans = 0;
         
-        vector<vector<int>> ar;
+        vector<pair<int,pair<int,int>>> ar;
         
         for(int i=0;i<n;i++)
         {
             for(int j=i+1;j<n;j++)
             {
                 int ct = cost(i,j,pt);
-                ar.push_back({i,j,ct});
+                ar.push_back({i,{j,ct}});
             }
         }
         
@@ -65,15 +65,15 @@ public:
         
         for(int i=0;i<ar.size();i++)
         {
-            int a = ar[i][0];
-            int b = ar[i][1];
+            int a = ar[i].first;
+            int b = ar[i].second.first;
             int u = get(a,par);
             int v = get(b,par);
             
             if(u == v)
                 continue;
             
-            ans += ar[i][2];
+            ans += ar[i].second.second;
             uni(a,b,par,sz);
         }
         
