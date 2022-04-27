@@ -8,18 +8,7 @@ bool cmp(int& a,int& b)
 }
 class Solution {
 public:
-    
-    int score(unordered_set<int>& s,vector<int>& sr)
-    {
-        int ans = 0;
-        for(int i:s)
-        {
-            ans+=sr[i];
-        }
-        
-        return ans;
-    }
-    
+   
     int helper(int u,int v,vector<vector<int>>& top,vector<int>& sr)
     {
         
