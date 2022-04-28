@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int memo[1010][2020];
+    int memo[1005][2005];
     int dp(int pos,int k,vector<vector<int>>& ar)
     {
         if(k<0)
