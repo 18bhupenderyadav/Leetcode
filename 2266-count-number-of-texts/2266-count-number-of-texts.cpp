@@ -17,7 +17,7 @@ public:
         int c = s[pos]-'0';
         int i = 0,times=time[c];
         
-        for(int i=pos;i<s.size() && times>0;i++)
+        for(int i=pos;times>0 && i<s.size() ;i++)
         {
             if(s[i]-'0' == c)
             {
