@@ -19,19 +19,22 @@ public:
             return;
         
         int cur = br[i][j]-'a';
-        if(nxt[node][cur] == 0)
-            return;
+        // if(nxt[node][cur] == 0)
+        //     return;
         
         vis[i][j]=1;
 
         
         
-        int new_node = nxt[node][cur];
+        if(nxt[node][cur])
+        {
+            int new_node = nxt[node][cur];
         
-        dfs(i+1,j,br,new_node);
-        dfs(i-1,j,br,new_node);
-        dfs(i,j+1,br,new_node);
-        dfs(i,j-1,br,new_node);
+            dfs(i+1,j,br,new_node);
+            dfs(i-1,j,br,new_node);
+            dfs(i,j+1,br,new_node);
+            dfs(i,j-1,br,new_node);
+        }
         
 
         vis[i][j]=0;
