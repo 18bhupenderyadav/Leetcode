@@ -2,7 +2,7 @@ class Solution {
 public:
     void add(vector<int>& ans, vector<int>& temp)
     {
-        set<int> s;
+        unordered_set<int> s;
         
         for(int i:ans)
             s.insert(i);
