@@ -11,8 +11,6 @@ public:
             LOG++;
         }
         
-        LOG = 20;
-        
         up = vector<vector<int>>(n,vector<int>(LOG));
         depth = vector<int>(n);
         
